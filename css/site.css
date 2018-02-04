@@ -10,3 +10,22 @@
     height: 600px;
     border: solid 1px #999999;
 }
+
+#popup {
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+}
+
+#istAd {
+    font-size: 20px;
+    color: darkblue;
+}
+
+#istBilgi div:first-child, #popup #buluttabani {
+    font-weight: bold;
+    font-size: 14px;
+}
+
+#popup div {
+    margin-bottom: 3px;
+}

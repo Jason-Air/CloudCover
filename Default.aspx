@@ -35,22 +35,22 @@
                     else coverInfoColumn = dataModel.cloudCoverObs;
                     coverAmount = Math.round(value[i][coverInfoColumn] / 12.5);
                     console.log(value[i][dataModel.istNo] + " " + value[i][dataModel.ad] + " " + value[i][dataModel.autoMan] + " " + value[i][coverInfoColumn])
-                    L.marker([value[i][dataModel.lat], value[i][dataModel.lon]], { icon: CoverIcon(coverAmount) }).addTo(map);
+                    L.marker([value[i][dataModel.lat], value[i][dataModel.lon]], { icon: CoverIcon(coverAmount) }).addTo(map).bindPopup(PrintPopup(value[i]));
                 }
             }
 
             //var coverIcon = L.icon({ iconUrl: './image/N5.png', iconSize: [iconSize, iconSize], popupAnchor: [-3, -76] });
 
-            var n0 = L.icon({ iconUrl: './' + iconFolder+'/N0.png', iconSize: [iconSize, iconSize], popupAnchor: [-3, -76] });
-            var n1 = L.icon({ iconUrl: './' + iconFolder +'/N1.png', iconSize: [iconSize, iconSize], popupAnchor: [-3, -76] });
-            var n2 = L.icon({ iconUrl: './' + iconFolder +'/N2.png', iconSize: [iconSize, iconSize], popupAnchor: [-3, -76] });
-            var n3 = L.icon({ iconUrl: './' + iconFolder +'/N3.png', iconSize: [iconSize, iconSize], popupAnchor: [-3, -76] });
-            var n4 = L.icon({ iconUrl: './' + iconFolder +'/N4.png', iconSize: [iconSize, iconSize], popupAnchor: [-3, -76] });
-            var n5 = L.icon({ iconUrl: './' + iconFolder +'/N5.png', iconSize: [iconSize, iconSize], popupAnchor: [-3, -76] });
-            var n6 = L.icon({ iconUrl: './' + iconFolder +'/N6.png', iconSize: [iconSize, iconSize], popupAnchor: [-3, -76] });
-            var n7 = L.icon({ iconUrl: './' + iconFolder +'/N7.png', iconSize: [iconSize, iconSize], popupAnchor: [-3, -76] });
-            var n8 = L.icon({ iconUrl: './' + iconFolder +'/N8.png', iconSize: [iconSize, iconSize], popupAnchor: [-3, -76] });
-            var n9 = L.icon({ iconUrl: './' + iconFolder +'/N9.png', iconSize: [iconSize, iconSize], popupAnchor: [-3, -76] });
+            var n0 = L.icon({ iconUrl: './' + iconFolder+'/N0.png', iconSize: [iconSize, iconSize]});
+            var n1 = L.icon({ iconUrl: './' + iconFolder +'/N1.png', iconSize: [iconSize, iconSize]});
+            var n2 = L.icon({ iconUrl: './' + iconFolder +'/N2.png', iconSize: [iconSize, iconSize]});
+            var n3 = L.icon({ iconUrl: './' + iconFolder +'/N3.png', iconSize: [iconSize, iconSize]});
+            var n4 = L.icon({ iconUrl: './' + iconFolder +'/N4.png', iconSize: [iconSize, iconSize]});
+            var n5 = L.icon({ iconUrl: './' + iconFolder +'/N5.png', iconSize: [iconSize, iconSize]});
+            var n6 = L.icon({ iconUrl: './' + iconFolder +'/N6.png', iconSize: [iconSize, iconSize]});
+            var n7 = L.icon({ iconUrl: './' + iconFolder +'/N7.png', iconSize: [iconSize, iconSize]});
+            var n8 = L.icon({ iconUrl: './' + iconFolder +'/N8.png', iconSize: [iconSize, iconSize]});
+            var n9 = L.icon({ iconUrl: './' + iconFolder +'/N9.png', iconSize: [iconSize, iconSize]});
 
             function CoverIcon(cover) {
                 switch (cover) {
@@ -67,6 +67,42 @@
                 }
             }
 
+            function PrintPopup(val) {
+                return `<div id='popup'>
+                    <div id= 'istAd' > `+ val[dataModel.ad] +`</div >
+                        <div id='istBilgi'>
+                            <div>Ölçülen Değerler</div>
+                            <div>Enlem: `+ val[dataModel.lat] + ` | Boylam: ` + val[dataModel.lon] + ` | Yükseklik: ` + val[dataModel.alt] + ` | Çalışma Şekli: ` + val[dataModel.autoMan] +`</div>
+                        </div>
+                        <div id='olcumler'>
+                            Sıcaklık: `+ val[dataModel.temperature] + ` | İşba: ` + val[dataModel.dewPoint] + ` | Görüş Mesafesi: - | Rüzgar: - / - | Toplam Kapalılık: ` + Math.round(val[dataModel.cloudCoverObs] * 12.5) + ` / 8 | Bulut Taban: ` + val[dataModel.cloudBottomObs] +` | Hadise: ??
+        </div>
+                        <div id='hesaplanan'>
+                            <div>Bulut Kapalılığı (%): `+ val[dataModel.cloudCoverSat] +`</div>
+                            <div id='buluttabani'>Bulut Tabanı</div>
+                            <div>Hesaplanan: `+ val[dataModel.cloudBottomEst] + `m | Enterpole Edilen: ` + val[dataModel.cloudBottomInterpole] + `m | Radara Göre: ` + val[dataModel.cloudBottomRadar] +`m</div>
+                            <hr />
+                            <div>Alçak Bulut Miktarı: `+ val[dataModel.cloudLowSat] + ` | Orta Bulut Miktarı: ` + val[dataModel.cloudMidSat] + ` | Yüksek Bulut Miktarı: ` + val[dataModel.cloudHiSat] +`</div>
+                            <div>İstasyon Etrafındaki PP Değeri: `+ val[dataModel.radarPPI] +`</div>
+                            <div>İstasyon Etrafındaki Şimşek Sayısı: `+ val[dataModel.lighteningCount] + `</div>
+                            <div>Muhtemel Hadise: `+ Phenomenon(val) + `</div>
+                            <div>CB `+ CB(val) +`</div>
+                        </div>
+    </div >
+                      `
+
+            }
+
+            function Phenomenon(val) {
+                if (val[dataModel.lighteningCount] > 0) return "Gökgürültüsü";
+                else if (val[dataModel.radarPPI] > 0) return "Yağış";
+                else return "--";
+            }
+
+            function CB(val) {
+                if (val[dataModel.lighteningCount] > 0) return "var";
+                else return "yok";
+            }
 
 
 
