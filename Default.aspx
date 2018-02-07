@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="./css/leaflet.css" />
     <script src="./js/leaflet.js"></script>
     <script src="js/dataModel.js"></script>
-    <script src="js/jquery-3.3.1.min.js"></script>
+
 
 </head>
 <body onload="yukle()">
@@ -29,28 +29,28 @@
             }).addTo(map);
 
             function yukle() {
-                var coverInfoColumn,coverAmount;
-                for (var i = 0; i < value.length; i++){
-                    if (value[i][dataModel.autoMan] == 'Otomatik') coverInfoColumn = dataModel.cloudCoverSat ;
-                    else coverInfoColumn = dataModel.cloudCoverObs;
-                    coverAmount = Math.round(value[i][coverInfoColumn] / 12.5);
-                    console.log(value[i][dataModel.istNo] + " " + value[i][dataModel.ad] + " " + value[i][dataModel.autoMan] + " " + value[i][coverInfoColumn])
-                    L.marker([value[i][dataModel.lat], value[i][dataModel.lon]], { icon: CoverIcon(coverAmount) }).addTo(map).bindPopup(PrintPopup(value[i]));
+                var coverInfoColumn, coverAmount;
+                for (var i = 0; i < value.length; i++) {
+                    if (value[i][dataModel.autoMan] == 'Otomatik') coverAmount = value[i][dataModel.cloudCoverSat];
+                    else coverAmount = value[i][dataModel.cloudCoverObs];
+                    coverAmount = Math.round(coverAmount / 12.5);
+                    console.log(value[i][dataModel.istNo] + " " + value[i][dataModel.ad] + " " + value[i][dataModel.autoMan] + " " + coverAmount + " " + coverAmount)
+                    L.marker([value[i][dataModel.lat], value[i][dataModel.lon]], { icon: CoverIcon(coverAmount) }).addTo(map).bindPopup(PrintPopup(value[i], coverAmount));
                 }
             }
 
             //var coverIcon = L.icon({ iconUrl: './image/N5.png', iconSize: [iconSize, iconSize], popupAnchor: [-3, -76] });
 
-            var n0 = L.icon({ iconUrl: './' + iconFolder+'/N0.png', iconSize: [iconSize, iconSize]});
-            var n1 = L.icon({ iconUrl: './' + iconFolder +'/N1.png', iconSize: [iconSize, iconSize]});
-            var n2 = L.icon({ iconUrl: './' + iconFolder +'/N2.png', iconSize: [iconSize, iconSize]});
-            var n3 = L.icon({ iconUrl: './' + iconFolder +'/N3.png', iconSize: [iconSize, iconSize]});
-            var n4 = L.icon({ iconUrl: './' + iconFolder +'/N4.png', iconSize: [iconSize, iconSize]});
-            var n5 = L.icon({ iconUrl: './' + iconFolder +'/N5.png', iconSize: [iconSize, iconSize]});
-            var n6 = L.icon({ iconUrl: './' + iconFolder +'/N6.png', iconSize: [iconSize, iconSize]});
-            var n7 = L.icon({ iconUrl: './' + iconFolder +'/N7.png', iconSize: [iconSize, iconSize]});
-            var n8 = L.icon({ iconUrl: './' + iconFolder +'/N8.png', iconSize: [iconSize, iconSize]});
-            var n9 = L.icon({ iconUrl: './' + iconFolder +'/N9.png', iconSize: [iconSize, iconSize]});
+            var n0 = L.icon({ iconUrl: './' + iconFolder + '/N0.png', iconSize: [iconSize, iconSize] });
+            var n1 = L.icon({ iconUrl: './' + iconFolder + '/N1.png', iconSize: [iconSize, iconSize] });
+            var n2 = L.icon({ iconUrl: './' + iconFolder + '/N2.png', iconSize: [iconSize, iconSize] });
+            var n3 = L.icon({ iconUrl: './' + iconFolder + '/N3.png', iconSize: [iconSize, iconSize] });
+            var n4 = L.icon({ iconUrl: './' + iconFolder + '/N4.png', iconSize: [iconSize, iconSize] });
+            var n5 = L.icon({ iconUrl: './' + iconFolder + '/N5.png', iconSize: [iconSize, iconSize] });
+            var n6 = L.icon({ iconUrl: './' + iconFolder + '/N6.png', iconSize: [iconSize, iconSize] });
+            var n7 = L.icon({ iconUrl: './' + iconFolder + '/N7.png', iconSize: [iconSize, iconSize] });
+            var n8 = L.icon({ iconUrl: './' + iconFolder + '/N8.png', iconSize: [iconSize, iconSize] });
+            var n9 = L.icon({ iconUrl: './' + iconFolder + '/N9.png', iconSize: [iconSize, iconSize] });
 
             function CoverIcon(cover) {
                 switch (cover) {
@@ -67,26 +67,26 @@
                 }
             }
 
-            function PrintPopup(val) {
+            function PrintPopup(val, coverAmout) {
                 return `<div id='popup'>
-                    <div id= 'istAd' > `+ val[dataModel.ad] +`</div >
+                    <div id= 'istAd' > `+ val[dataModel.ad] + `</div >
                         <div id='istBilgi'>
                             <div>Ölçülen Değerler</div>
-                            <div>Enlem: `+ val[dataModel.lat] + ` | Boylam: ` + val[dataModel.lon] + ` | Yükseklik: ` + val[dataModel.alt] + ` | Çalışma Şekli: ` + val[dataModel.autoMan] +`</div>
+                            <div>Enlem: `+ val[dataModel.lat] + ` | Boylam: ` + val[dataModel.lon] + ` | Yükseklik: ` + val[dataModel.alt] + ` | Çalışma Şekli: ` + val[dataModel.autoMan] + `</div>
                         </div>
                         <div id='olcumler'>
-                            Sıcaklık: `+ val[dataModel.temperature] + ` | İşba: ` + val[dataModel.dewPoint] + ` | Görüş Mesafesi: - | Rüzgar: - / - | Toplam Kapalılık: ` + Math.round(val[dataModel.cloudCoverObs] * 12.5) + ` / 8 | Bulut Taban: ` + val[dataModel.cloudBottomObs] +` | Hadise: ??
+                            Sıcaklık: `+ val[dataModel.temperature] + ` | İşba: ` + val[dataModel.dewPoint] + ` | Görüş Mesafesi: - | Rüzgar: - / - | Toplam Kapalılık: ` + coverAmout + ` / 8 | Bulut Taban: ` + val[dataModel.cloudBottomObs] + ` | Hadise: --
         </div>
                         <div id='hesaplanan'>
-                            <div>Bulut Kapalılığı (%): `+ val[dataModel.cloudCoverSat] +`</div>
+                            <div>Bulut Kapalılığı (%): `+ val[dataModel.cloudCoverSat] + `</div>
                             <div id='buluttabani'>Bulut Tabanı</div>
-                            <div>Hesaplanan: `+ val[dataModel.cloudBottomEst] + `m | Enterpole Edilen: ` + val[dataModel.cloudBottomInterpole] + `m | Radara Göre: ` + val[dataModel.cloudBottomRadar] +`m</div>
+                            <div>Hesaplanan: `+ val[dataModel.cloudBottomEst] + `m | Enterpole Edilen: ` + val[dataModel.cloudBottomInterpole] + `m | Radara Göre: ` + val[dataModel.cloudBottomRadar] + `m</div>
                             <hr />
-                            <div>Alçak Bulut Miktarı: `+ val[dataModel.cloudLowSat] + ` | Orta Bulut Miktarı: ` + val[dataModel.cloudMidSat] + ` | Yüksek Bulut Miktarı: ` + val[dataModel.cloudHiSat] +`</div>
-                            <div>İstasyon Etrafındaki PP Değeri: `+ val[dataModel.radarPPI] +`</div>
+                            <div>Alçak Bulut Miktarı: `+ val[dataModel.cloudLowSat] + ` | Orta Bulut Miktarı: ` + val[dataModel.cloudMidSat] + ` | Yüksek Bulut Miktarı: ` + val[dataModel.cloudHiSat] + `</div>
+                            <div>İstasyon Etrafındaki PP Değeri: `+ val[dataModel.radarPPI] + `</div>
                             <div>İstasyon Etrafındaki Şimşek Sayısı: `+ val[dataModel.lighteningCount] + `</div>
                             <div>Muhtemel Hadise: `+ Phenomenon(val) + `</div>
-                            <div>CB `+ CB(val) +`</div>
+                            <div>CB `+ CB(val) + `</div>
                         </div>
     </div >
                       `
