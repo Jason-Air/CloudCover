@@ -7,7 +7,6 @@
 
 #map {
     width: 100%;
-    height: 600px;
     border: solid 1px #999999;
 }
 
@@ -21,7 +20,7 @@
     color: darkblue;
 }
 
-#istBilgi div:first-child, #popup #buluttabani {
+#popup div.arabaslik, #popup #buluttabani {
     font-weight: bold;
     font-size: 14px;
 }

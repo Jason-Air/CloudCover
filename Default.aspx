@@ -34,9 +34,10 @@
                     if (value[i][dataModel.autoMan] == 'Otomatik') coverAmount = value[i][dataModel.cloudCoverSat];
                     else coverAmount = value[i][dataModel.cloudCoverObs];
                     coverAmount = Math.round(coverAmount / 12.5);
-                    console.log(value[i][dataModel.istNo] + " " + value[i][dataModel.ad] + " " + value[i][dataModel.autoMan] + " " + coverAmount + " " + coverAmount)
+                    console.log(value[i][dataModel.istNo] + " " + value[i][dataModel.ad] + " " + value[i][dataModel.autoMan] + " " + coverAmount + " " + value[i][dataModel.cloudBottomEst]);
                     L.marker([value[i][dataModel.lat], value[i][dataModel.lon]], { icon: CoverIcon(coverAmount) }).addTo(map).bindPopup(PrintPopup(value[i], coverAmount));
                 }
+                document.getElementById("map").style.height = window.innerHeight+'px';
             }
 
             //var coverIcon = L.icon({ iconUrl: './image/N5.png', iconSize: [iconSize, iconSize], popupAnchor: [-3, -76] });
@@ -71,16 +72,17 @@
                 return `<div id='popup'>
                     <div id= 'istAd' > `+ val[dataModel.ad] + `</div >
                         <div id='istBilgi'>
-                            <div>Ölçülen Değerler</div>
+                            <div class='arabaslik'>İstasyon Bilgileri</div>
                             <div>Enlem: `+ val[dataModel.lat] + ` | Boylam: ` + val[dataModel.lon] + ` | Yükseklik: ` + val[dataModel.alt] + ` | Çalışma Şekli: ` + val[dataModel.autoMan] + `</div>
                         </div>
+                        <div class='arabaslik'>Ölçülen Değerler</div>
                         <div id='olcumler'>
                             Sıcaklık: `+ val[dataModel.temperature] + ` | İşba: ` + val[dataModel.dewPoint] + ` | Görüş Mesafesi: - | Rüzgar: - / - | Toplam Kapalılık: ` + coverAmout + ` / 8 | Bulut Taban: ` + val[dataModel.cloudBottomObs] + ` | Hadise: --
-        </div>
+                        </div>
                         <div id='hesaplanan'>
+                            <div class='arabaslik'>Hesaplanan Değerler</div>
                             <div>Bulut Kapalılığı (%): `+ val[dataModel.cloudCoverSat] + `</div>
-                            <div id='buluttabani'>Bulut Tabanı</div>
-                            <div>Hesaplanan: `+ val[dataModel.cloudBottomEst] + `m | Enterpole Edilen: ` + val[dataModel.cloudBottomInterpole] + `m | Radara Göre: ` + val[dataModel.cloudBottomRadar] + `m</div>
+                            <div>Hesaplanan: `+ val[dataModel.cloudBottomEst] + `m | Enterpole Edilen: ` + val[dataModel.cloudBottomInterpole] + `m </div>
                             <hr />
                             <div>Alçak Bulut Miktarı: `+ val[dataModel.cloudLowSat] + ` | Orta Bulut Miktarı: ` + val[dataModel.cloudMidSat] + ` | Yüksek Bulut Miktarı: ` + val[dataModel.cloudHiSat] + `</div>
                             <div>İstasyon Etrafındaki PP Değeri: `+ val[dataModel.radarPPI] + `</div>
@@ -104,6 +106,9 @@
                 else return "yok";
             }
 
+            window.addEventListener('resize', function () {
+                document.getElementById("map").style.height = window.innerHeight + 'px';
+            })
 
 
 
