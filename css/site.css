@@ -7,6 +7,7 @@
 
 #map {
     width: 100%;
+    height: 100%;
     border: solid 1px #999999;
 }
 
@@ -15,16 +16,25 @@
     font-size: 12px;
 }
 
+    #popup div.arabaslik, #popup #buluttabani {
+        font-weight: bold;
+        font-size: 14px;
+    }
+
+    #popup div {
+        margin-bottom: 3px;
+    }
+
 #istAd {
     font-size: 20px;
     color: darkblue;
 }
 
-#popup div.arabaslik, #popup #buluttabani {
-    font-weight: bold;
-    font-size: 14px;
+.divIcon {
+    background-color: none;
 }
 
-#popup div {
-    margin-bottom: 3px;
-}
+    .divIcon .precipitation {
+        margin-top: -50px;
+        margin-left: -25px;
+    }
