@@ -11,7 +11,7 @@ public partial class _Default : System.Web.UI.Page
     protected void Page_Load(object sender, EventArgs e)
     {
 
-        //form1.InnerHtml += "<script>" + FileToArray(new DateTime(2018, 01, 25, 13, 0, 0)) + "</script>";
+        form1.InnerHtml += "<script>" + FileToArray(new DateTime(2018, 01, 25, 13, 0, 0)) + "</script>";
     }
 
     string FileToArray(DateTime dt)
@@ -24,7 +24,7 @@ public partial class _Default : System.Web.UI.Page
         string[] content;
 
         content = File.ReadAllLines(theFile);
-        
+
         title = content[0].Split(';');
         output += "title=[";
         for (int i = 0; i < title.Length; i++)
@@ -32,18 +32,21 @@ public partial class _Default : System.Web.UI.Page
         output = output.TrimEnd(',');
         output += "];";
         output += "value=[";
-        for (int i=1;i<content.Length;i++) 
+        //for (int i = 1; i < content.Length; i++)
+        //{
+        //    value = content[i].Split(';');
+        //    output += "[";
+        //    foreach (var v in value)
+        //    {
+        //        output += "'" + v + "',";
+        //    }
+        //    output = output.TrimEnd(',');
+        //    output += "],";
+        //}
+        for (int i = 1; i < content.Length; i++)
         {
-            value = content[i].Split(';');
-            output += "[";
-            foreach (var v in value) 
-            {
-                output += "'" + v + "',";   
-            }
-            output = output.TrimEnd(',');
-            output += "],";
+            output += "['"+content[i].Replace(";","','")+"'],";
         }
-
         output = output.TrimEnd(',');
         output += "]";
 
