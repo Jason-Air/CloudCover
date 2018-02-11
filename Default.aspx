@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="./css/leaflet.css" />
     <script src="./js/leaflet.js"></script>
     <script src="js/dataModel.js"></script>
-    <script src="js/JavaScript.js"></script>
+    <%--<script src="js/JavaScript.js"></script>--%>
 
 </head>
 <body>

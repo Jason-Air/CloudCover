@@ -11,7 +11,7 @@ public partial class _Default : System.Web.UI.Page
     protected void Page_Load(object sender, EventArgs e)
     {
 
-        //form1.InnerHtml += "<script>" + FileToArray(new DateTime(2018, 01, 25, 13, 0, 0)) + "</script>";
+        form1.InnerHtml += "<script>" + FileToArray(new DateTime(2018, 01, 25, 13, 0, 0)) + "</script>";
     }
 
     string FileToArray(DateTime dt)
