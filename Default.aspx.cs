@@ -25,12 +25,13 @@ public partial class _Default : System.Web.UI.Page
 
         content = File.ReadAllLines(theFile);
 
-        title = content[0].Split(';');
-        output += "title=[";
-        for (int i = 0; i < title.Length; i++)
-            output += "'" + title[i] + "',";
+        //title = content[0].Split(';');
+        output += "title=['" + content[0].Replace(";", "','") + "'];";
+        //for (int i = 0; i < title.Length; i++)
+        //    output += "'" + title[i] + "',";
+
         output = output.TrimEnd(',');
-        output += "];";
+        //output += "];";
         output += "value=[";
         //for (int i = 1; i < content.Length; i++)
         //{
