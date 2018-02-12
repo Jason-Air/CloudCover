@@ -1,16 +1,23 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Default.aspx.cs" Inherits="_Default" %>
+
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="tr">
 <head runat="server">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Bulut Kapalılık Haritası</title>
     <link rel="stylesheet" href="./css/site.css" />
     <link rel="stylesheet" href="./css/leaflet.css" />
+    <link href="css/datepicker.css" rel="stylesheet" />
     <script src="./js/leaflet.js"></script>
     <script src="js/dataModel.js"></script>
+    <script src="js/datepicker.js"></script>
     <%--<script src="js/JavaScript.js"></script>--%>
 </head>
 <body>
+    <div id="date">
+        <input id="datetime" type="text" />
+        <input id="button" type="button" value="Tamam" />
+    </div>
     <div id="map"></div>
     <form id="form1" runat="server">
         <script type="text/javascript">
@@ -58,7 +65,7 @@
                                 <div>Alçak Bulut Miktarı: `+ val[dataModel.cloudLowSat] + ` | Orta Bulut Miktarı: ` + val[dataModel.cloudMidSat] + ` | Yüksek Bulut Miktarı: ` + val[dataModel.cloudHiSat] + `</div>
                                 <div>İstasyon Etrafındaki PP Değeri: `+ val[dataModel.radarPPI] + `</div>
                                 <div>İstasyon Etrafındaki Şimşek Sayısı: `+ val[dataModel.lighteningCount] + `</div>
-                                <div>Muhtemel Hadise: `+ Phenomenon(val)+ `</div>
+                                <div>Muhtemel Hadise: `+ Phenomenon(val) + `</div>
                                 <div>CB `+ CB(val) + `</div>
                             </div>
                         </div >
@@ -76,11 +83,12 @@
                 if (val[dataModel.lighteningCount] > 0) return "var";
                 else return "yok";
             }
-            
+
         </script>
     </form>
     <script type="text/javascript">
             var map = L.map('map').setView([39.0, 35.5], 6);
+            map.zoomControl.setPosition('topright');
             // add an OpenStreetMap tile layer
             L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
                 attribution: '&copy; <a href="http://www.mgm.gov.tr">Meteoroloji Genel Müdürlüğü</a>'
@@ -94,7 +102,7 @@
                 yukle();
             })
 
-            map.on("zoomend", function () {                                if (map.getZoom() < 9) {
+            map.on("zoomend", function () {                if (map.getZoom() < 9) {
                     ShowInfo('cloudInfo', false);
                 } else {                    ShowInfo('cloudInfo', true);                }                if (map.getZoom() < 8) {
                     ShowInfo('precipitation', false);
@@ -110,6 +118,41 @@
                     }
                 }
             }
+
+
+            const picker = datepicker(document.querySelector('#datetime'), {
+                position: 'bl', // bottom left.
+                startDate: new Date(), // This month.
+                startDay: 1, // Calendar week starts on a Monday.
+                dateSelected: new Date(), // Today is selected.
+                minDate: new Date(2016, 5, 1), // June 1st, 2016.
+                maxDate: new Date(2099, 0, 1), // Jan 1st, 2099.
+                noWeekends: false, // Weekends will be unselectable.
+                formatter: function (el, date) {
+                    // This will display the date as `1/1/2017`.
+                    el.value = date.toDateString();
+                    el.value = date.getDate() + "/" + (Number(date.getMonth()) + 1) + "/" + date.getFullYear();
+                },
+                onSelect: function (instance) {
+                    // Show which date was selected.
+                    console.log(instance.dateSelected);
+                },
+                onShow: function (instance) {
+                    console.log('Calendar showing.');
+                },
+                onHide: function (instance) {
+                    console.log('Calendar hidden.');
+                },
+                onMonthChange: function (instance) {
+                    // Show the month of the selected date.
+                    console.log(instance.currentMonthName);
+                },
+                customMonths: ['Oca', 'Şub', 'Mar', 'Nis', 'May', 'Haz', 'Tem', 'Ağu', 'Eyl', 'Eki', 'Kas', 'Ara'],
+                customDays: ['Paz', 'Pts', 'Sal', 'Çar', 'Per', 'Cum', 'Cts'],
+                overlayPlaceholder: 'Yılı giriniz.',
+                overlayButton: 'Tamam',
+                disableMobile: true // Conditionally disabled on mobile devices.
+            });
     </script>
 </body>
 </html>
