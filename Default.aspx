@@ -14,12 +14,43 @@
     <%--<script src="js/JavaScript.js"></script>--%>
 </head>
 <body>
-    <div id="date">
-        <input id="datetime" type="text" />
-        <input id="button" type="button" value="Tamam" />
-    </div>
-    <div id="map"></div>
     <form id="form1" runat="server">
+    <div id="map"></div>
+    <div id="date" runat="server">
+        <input id="datetime" type="text" runat="server" />
+        <span id="saat">Saat :</span>  
+        <span class="custom-dropdown">
+        <asp:DropDownList ID="DropDownList1" runat="server">
+            <asp:ListItem>00</asp:ListItem>
+            <asp:ListItem>01</asp:ListItem>
+            <asp:ListItem>02</asp:ListItem>
+            <asp:ListItem>03</asp:ListItem>
+            <asp:ListItem>04</asp:ListItem>
+            <asp:ListItem>05</asp:ListItem>
+            <asp:ListItem>06</asp:ListItem>
+            <asp:ListItem>07</asp:ListItem>
+            <asp:ListItem>08</asp:ListItem>
+            <asp:ListItem>09</asp:ListItem>
+            <asp:ListItem>10</asp:ListItem>
+            <asp:ListItem>11</asp:ListItem>
+            <asp:ListItem>12</asp:ListItem>
+            <asp:ListItem>13</asp:ListItem>
+            <asp:ListItem>14</asp:ListItem>
+            <asp:ListItem>15</asp:ListItem>
+            <asp:ListItem>16</asp:ListItem>
+            <asp:ListItem>17</asp:ListItem>
+            <asp:ListItem>18</asp:ListItem>
+            <asp:ListItem>19</asp:ListItem>
+            <asp:ListItem>20</asp:ListItem>
+            <asp:ListItem>21</asp:ListItem>
+            <asp:ListItem>22</asp:ListItem>
+            <asp:ListItem>23</asp:ListItem>
+        </asp:DropDownList>
+        </span>
+        <asp:Button ID="button" runat="server" Text="Tamam" OnClick="button_Click" />
+        
+    </div>
+    
         <script type="text/javascript">
             var iconSize = 25;
             var miniIconSize = 10;
@@ -39,10 +70,12 @@
             }
 
             function GetIcon(val, cover) {
-                var html = '<div class=\'cloudInfo\'><img src=./' + iconFolder + '/radar.svg alt=\'Radara Göre Bulut Tabanı\'> : ' + val[dataModel.cloudBottomRadar] + '<br/> <img src=./' + iconFolder + '/estimate.svg alt=\'Hesaplanan Bulut Tabanı\'>: ' + val[dataModel.cloudBottomEst] + '</div>'
+                var html = '<div class=\'cloudInfo\'> ' + val[dataModel.cloudBottomInterpole] + '<br/> <img src=./' + iconFolder + '/estimate.svg alt=\'Hesaplanan Bulut Tabanı\'>: ' + val[dataModel.cloudBottomEst] + '</div>'
                 html += '<img src=./' + iconFolder + '/N' + cover + '.png height=' + iconSize + ' width=' + iconSize + '>';
                 html += '<div class=\'cityName\'>' + val[dataModel.ad] + '</div>';
                 if (val[dataModel.radarPPI] > 0) html += '<div class=\'precipitation\'><img src=./' + iconFolder + '/prec.svg height=' + iconSize + ' width=' + iconSize + '></div>';
+                if (val[dataModel.autoMan] == "Otomatik") html += '<div class=\'autoMan\'><img src=./' + iconFolder + '/auto.svg height=' + iconSize + ' width=' + iconSize + '></div>';
+                else html += '<div class=\'autoMan\'><img src=./' + iconFolder + '/man.svg height=' + iconSize + ' width=' + iconSize + '></div>';
                 return L.divIcon({ html: html, iconSize: [iconSize, iconSize], className: 'divIcon' });
             }
 
@@ -55,7 +88,7 @@
                             </div>
                             <div class='arabaslik'>Ölçülen Değerler</div>
                             <div id='olcumler'>
-                                Sıcaklık: `+ val[dataModel.temperature] + ` | İşba: ` + val[dataModel.dewPoint] + ` | Görüş Mesafesi: - | Rüzgar: - / - | Toplam Kapalılık: ` + coverAmout + ` / 8 | Bulut Taban: ` + val[dataModel.cloudBottomObs] + ` | Hadise: --
+                                Sıcaklık: `+ val[dataModel.temperature] + ` | İşba: ` + val[dataModel.dewPoint] + ` | Görüş Mesafesi: ` + val[dataModel.visibility] + ` | Rüzgar:  ` + val[dataModel.windDirection] + ` / ` + val[dataModel.windSpeed] + ` | Toplam Kapalılık: ` + coverAmout + ` / 8 | Bulut Taban: ` + val[dataModel.cloudBottomObs] + ` 
                             </div>
                             <div id='hesaplanan'>
                                 <div class='arabaslik'>Hesaplanan Değerler</div>
@@ -67,6 +100,7 @@
                                 <div>İstasyon Etrafındaki Şimşek Sayısı: `+ val[dataModel.lighteningCount] + `</div>
                                 <div>Muhtemel Hadise: `+ Phenomenon(val) + `</div>
                                 <div>CB `+ CB(val) + `</div>
+                                <div id='tarih'>`+ val[dataModel.hour] + ` ` + val[dataModel.day] + `.` + val[dataModel.month] + `.` + val[dataModel.year] + `</div>
                             </div>
                         </div >
                       `
@@ -85,6 +119,7 @@
             }
 
         </script>
+        <asp:Label ID="Label1" runat="server" Text=""></asp:Label>
     </form>
     <script type="text/javascript">
             var map = L.map('map').setView([39.0, 35.5], 6);
@@ -102,12 +137,23 @@
                 yukle();
             })
 
-            map.on("zoomend", function () {                if (map.getZoom() < 9) {
+            map.on("zoomend", function () {
+
+                if (map.getZoom() < 9) {
                     ShowInfo('cloudInfo', false);
-                } else {                    ShowInfo('cloudInfo', true);                }                if (map.getZoom() < 8) {
+                } else {
+                    ShowInfo('cloudInfo', true);
+                }
+
+                if (map.getZoom() < 8) {
                     ShowInfo('precipitation', false);
-                } else {                    ShowInfo('precipitation', true);
-                }            });            function ShowInfo(obj, show) {                var infos = document.getElementsByClassName(obj);
+                } else {
+                    ShowInfo('precipitation', true);
+                }
+            });
+
+            function ShowInfo(obj, show) {
+                var infos = document.getElementsByClassName(obj);
                 if (show) {
                     for (var i = 0; i < infos.length; i++) {
                         infos[i].style.display = '';
@@ -117,7 +163,8 @@
                         infos[i].style.display = 'none';
                     }
                 }
-            }
+            }
+
 
 
             const picker = datepicker(document.querySelector('#datetime'), {
@@ -130,12 +177,13 @@
                 noWeekends: false, // Weekends will be unselectable.
                 formatter: function (el, date) {
                     // This will display the date as `1/1/2017`.
-                    el.value = date.toDateString();
-                    el.value = date.getDate() + "/" + (Number(date.getMonth()) + 1) + "/" + date.getFullYear();
+                    //el.value = date.toDateString();
+                    //el.value = date.getDate() + "." + (Number(date.getMonth()) + 1) + "." + date.getFullYear();
                 },
                 onSelect: function (instance) {
                     // Show which date was selected.
                     console.log(instance.dateSelected);
+                    instance.el.value = instance.dateSelected.getDate() + "." + (Number(instance.dateSelected.getMonth()) + 1) + "." + instance.dateSelected.getFullYear();
                 },
                 onShow: function (instance) {
                     console.log('Calendar showing.');

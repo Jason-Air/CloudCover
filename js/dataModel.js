@@ -25,5 +25,8 @@
     radarMaxTop: 23,
     radarMxValue: 24,
     cloudBottomInterpole: 25,
-    observation: 26
+    windDirection: 26,
+    windSpeed: 27,
+    visibility:28,
+    observation: 29
 }
