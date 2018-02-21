@@ -35,6 +35,7 @@ public partial class _Default : System.Web.UI.Page
             else
             {
                 message = FileToArray(file);
+                message = message.Replace("-999", "---").Replace("-99", "---");
                 Label1.Text = "<script>" + message + "</script>";
                 file = file.Substring(file.IndexOf('\\', 5) + 1, 10);
                 datetime.Value = file.Substring(6, 2) + "." + file.Substring(4, 2) + "." + file.Substring(0, 4);// dt.ToString("dd/MM/yyyy");

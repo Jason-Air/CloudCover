@@ -36,12 +36,12 @@
     background-color: none;
 }
 
-    .divIcon .precipitation {
+    .divIcon .pheno {
         margin-top: -50px;
         margin-left: -25px;
     }
 
-    .divIcon .autoMan {
+    .autoMan {
         margin-top: -50px;
         margin-left: 35px;
     }
@@ -50,8 +50,6 @@
         width: 60px;
     }
 
-    .divIcon .cloudInfo {
-    }
 
         .divIcon .cloudInfo img {
             width: 12px;

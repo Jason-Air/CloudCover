@@ -15,42 +15,42 @@
 </head>
 <body>
     <form id="form1" runat="server">
-    <div id="map"></div>
-    <div id="date" runat="server">
-        <input id="datetime" type="text" runat="server" />
-        <span id="saat">Saat :</span>  
-        <span class="custom-dropdown">
-        <asp:DropDownList ID="DropDownList1" runat="server">
-            <asp:ListItem>00</asp:ListItem>
-            <asp:ListItem>01</asp:ListItem>
-            <asp:ListItem>02</asp:ListItem>
-            <asp:ListItem>03</asp:ListItem>
-            <asp:ListItem>04</asp:ListItem>
-            <asp:ListItem>05</asp:ListItem>
-            <asp:ListItem>06</asp:ListItem>
-            <asp:ListItem>07</asp:ListItem>
-            <asp:ListItem>08</asp:ListItem>
-            <asp:ListItem>09</asp:ListItem>
-            <asp:ListItem>10</asp:ListItem>
-            <asp:ListItem>11</asp:ListItem>
-            <asp:ListItem>12</asp:ListItem>
-            <asp:ListItem>13</asp:ListItem>
-            <asp:ListItem>14</asp:ListItem>
-            <asp:ListItem>15</asp:ListItem>
-            <asp:ListItem>16</asp:ListItem>
-            <asp:ListItem>17</asp:ListItem>
-            <asp:ListItem>18</asp:ListItem>
-            <asp:ListItem>19</asp:ListItem>
-            <asp:ListItem>20</asp:ListItem>
-            <asp:ListItem>21</asp:ListItem>
-            <asp:ListItem>22</asp:ListItem>
-            <asp:ListItem>23</asp:ListItem>
-        </asp:DropDownList>
-        </span>
-        <asp:Button ID="button" runat="server" Text="Tamam" OnClick="button_Click" />
-        
-    </div>
-    
+        <div id="map"></div>
+        <div id="date" runat="server">
+            <input id="datetime" type="text" runat="server" />
+            <span id="saat">Saat :</span>
+            <span class="custom-dropdown">
+                <asp:DropDownList ID="DropDownList1" runat="server">
+                    <asp:ListItem>00</asp:ListItem>
+                    <asp:ListItem>01</asp:ListItem>
+                    <asp:ListItem>02</asp:ListItem>
+                    <asp:ListItem>03</asp:ListItem>
+                    <asp:ListItem>04</asp:ListItem>
+                    <asp:ListItem>05</asp:ListItem>
+                    <asp:ListItem>06</asp:ListItem>
+                    <asp:ListItem>07</asp:ListItem>
+                    <asp:ListItem>08</asp:ListItem>
+                    <asp:ListItem>09</asp:ListItem>
+                    <asp:ListItem>10</asp:ListItem>
+                    <asp:ListItem>11</asp:ListItem>
+                    <asp:ListItem>12</asp:ListItem>
+                    <asp:ListItem>13</asp:ListItem>
+                    <asp:ListItem>14</asp:ListItem>
+                    <asp:ListItem>15</asp:ListItem>
+                    <asp:ListItem>16</asp:ListItem>
+                    <asp:ListItem>17</asp:ListItem>
+                    <asp:ListItem>18</asp:ListItem>
+                    <asp:ListItem>19</asp:ListItem>
+                    <asp:ListItem>20</asp:ListItem>
+                    <asp:ListItem>21</asp:ListItem>
+                    <asp:ListItem>22</asp:ListItem>
+                    <asp:ListItem>23</asp:ListItem>
+                </asp:DropDownList>
+            </span>
+            <asp:Button ID="button" runat="server" Text="Tamam" OnClick="button_Click" />
+
+        </div>
+
         <script type="text/javascript">
             var iconSize = 25;
             var miniIconSize = 10;
@@ -63,26 +63,27 @@
                     else coverAmount = value[i][dataModel.cloudCoverObs];
                     coverAmount = Math.round(coverAmount / 12.5);
                     console.log(value[i][dataModel.istNo] + " " + value[i][dataModel.ad] + " " + value[i][dataModel.autoMan] + " " + coverAmount + " " + value[i][dataModel.cloudBottomEst]);
-                    L.marker([value[i][dataModel.lat], value[i][dataModel.lon]], { icon: GetIcon(value[i], coverAmount) /*GetIcon(coverAmount, value[i][dataModel.ad], value[i][dataModel.radarPPI] > 0)*/ }).addTo(map).bindPopup(PrintPopup(value[i], coverAmount));
+                    L.marker([value[i][dataModel.lat], value[i][dataModel.lon]], { icon: GetIcon(value[i], coverAmount) }).addTo(map).bindPopup(PrintPopup(value[i], coverAmount));
                 }
                 ShowInfo('precipitation', false);
                 ShowInfo('cloudInfo', false);
             }
 
             function GetIcon(val, cover) {
-                var html = '<div class=\'cloudInfo\'> ' + val[dataModel.cloudBottomInterpole] + '<br/> <img src=./' + iconFolder + '/estimate.svg alt=\'Hesaplanan Bulut Tabanı\'>: ' + val[dataModel.cloudBottomEst] + '</div>'
+                var html = '<div class=\'cloudInfo\'> ' + val[dataModel.cloudBottomInterpole] + '<br/> ' + val[dataModel.cloudBottomEst] + '</div>'
                 html += '<img src=./' + iconFolder + '/N' + cover + '.png height=' + iconSize + ' width=' + iconSize + '>';
                 html += '<div class=\'cityName\'>' + val[dataModel.ad] + '</div>';
-                if (val[dataModel.radarPPI] > 0) html += '<div class=\'precipitation\'><img src=./' + iconFolder + '/prec.svg height=' + iconSize + ' width=' + iconSize + '></div>';
-                if (val[dataModel.autoMan] == "Otomatik") html += '<div class=\'autoMan\'><img src=./' + iconFolder + '/auto.svg height=' + iconSize + ' width=' + iconSize + '></div>';
-                else html += '<div class=\'autoMan\'><img src=./' + iconFolder + '/man.svg height=' + iconSize + ' width=' + iconSize + '></div>';
+                if (val[dataModel.lighteningCount] > 0 && val[dataModel.radarPPI] > 0) html += '<div class=\'pheno\'><img src=./' + iconFolder + '/lightning.svg height=' + iconSize + ' width=' + iconSize + '></div>';
+                else if (val[dataModel.radarPPI] > 0) html += '<div class=\'pheno\'><img src=./' + iconFolder + '/prec.svg height=' + iconSize + ' width=' + iconSize + '></div>';
+
+
                 return L.divIcon({ html: html, iconSize: [iconSize, iconSize], className: 'divIcon' });
             }
 
             function PrintPopup(val, coverAmout) {
                 return `<div id='popup'>
-                        <div id= 'istAd' > `+ val[dataModel.ad] + `</div >
-                            <div id='istBilgi'>
+                        <div id= 'istAd' > `+ val[dataModel.ad] + `</div >` + AutoMan(val) +
+                    `<div id='istBilgi'>
                                 <div class='arabaslik'>İstasyon Bilgileri</div>
                                 <div>Enlem: `+ val[dataModel.lat] + ` | Boylam: ` + val[dataModel.lon] + ` | Yükseklik: ` + val[dataModel.alt] + ` | Çalışma Şekli: ` + val[dataModel.autoMan] + `</div>
                             </div>
@@ -96,18 +97,25 @@
                                 <div>Hesaplanan: `+ val[dataModel.cloudBottomEst] + `m | Enterpole Edilen: ` + val[dataModel.cloudBottomInterpole] + `m </div>
                                 <hr />
                                 <div>Alçak Bulut Miktarı: `+ val[dataModel.cloudLowSat] + ` | Orta Bulut Miktarı: ` + val[dataModel.cloudMidSat] + ` | Yüksek Bulut Miktarı: ` + val[dataModel.cloudHiSat] + `</div>
-                                <div>İstasyon Etrafındaki PP Değeri: `+ val[dataModel.radarPPI] + `</div>
+                                <div>En Yakın Radar PPI Değeri: `+ val[dataModel.radarPPI] + `</div>
                                 <div>İstasyon Etrafındaki Şimşek Sayısı: `+ val[dataModel.lighteningCount] + `</div>
                                 <div>Muhtemel Hadise: `+ Phenomenon(val) + `</div>
                                 <div>CB `+ CB(val) + `</div>
-                                <div id='tarih'>`+ val[dataModel.hour] + ` ` + val[dataModel.day] + `.` + val[dataModel.month] + `.` + val[dataModel.year] + `</div>
+                                <hr/>
+                                <div id='tarih'> Gözlem Tarih ve Saati:<br/>`+ val[dataModel.hour] + ` ` + val[dataModel.day] + `.` + val[dataModel.month] + `.` + val[dataModel.year] + `</div>
                             </div>
                         </div >
                       `
             }
 
+            function AutoMan(val) {
+                if (val[dataModel.autoMan] == "Otomatik") return '<div class=\'autoMan\'><img src=./' + iconFolder + '/auto.svg height=' + iconSize + ' width=' + iconSize + '></div>';
+                else return '<div class=\'autoMan\'><img src=./' + iconFolder + '/man.svg height=' + iconSize + ' width=' + iconSize + '></div>';
+            }
+
             function Phenomenon(val) {
-                if (val[dataModel.lighteningCount] > 0) return "Gökgürültüsü";
+                if (val[dataModel.lighteningCount] > 0 && val[dataModel.radarPPI] > 0) return "Gökgürültülü Sağanak";
+                else if (val[dataModel.lighteningCount] > 0) return "Gökgürültülü";
                 else if (val[dataModel.radarPPI] > 0) return "Yağış";
                 else if (val[dataModel.temperature] - val[dataModel.dewPoint] < 0.5) return "Sis/Pus"
                 else return "--";
@@ -126,14 +134,14 @@
             map.zoomControl.setPosition('topright');
             // add an OpenStreetMap tile layer
             L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-                attribution: '&copy; <a href="http://www.mgm.gov.tr">Meteoroloji Genel Müdürlüğü</a>'
+                attribution: 'Bu çalışma deneme aşamasındadır. Haritada Gösterilen noktalarda, hesaplanan değerlerden daha farklı hava durumu gözlenebilir. Bu üründen faydalanılması, kullanıcının inisiyatifindedir. MGM hiçbir şekilde sorumlu tutulamaz. | &copy; <a href="http://www.mgm.gov.tr">Meteoroloji Genel Müdürlüğü</a>'
             }).addTo(map);
             window.addEventListener('resize', function () {
-                document.getElementById("map").style.height = window.innerHeight + 'px';
+                document.getElementById("map").style.height = window.innerHeight-20 + 'px';
             })
 
             window.addEventListener('load', function () {
-                document.getElementById("map").style.height = window.innerHeight + 'px';
+                document.getElementById("map").style.height = window.innerHeight-20 + 'px';
                 yukle();
             })
 
