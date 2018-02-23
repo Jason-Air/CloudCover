@@ -71,7 +71,7 @@
 
             function GetIcon(val, cover) {
                 var html = '<div class=\'cloudInfo\'> ' + val[dataModel.cloudBottomInterpole] + '<br/> ' + val[dataModel.cloudBottomEst] + '</div>'
-                html += '<img src=./' + iconFolder + '/N' + cover + '.png height=' + iconSize + ' width=' + iconSize + '>';
+                html += '<img src=./' + iconFolder + '/N' + cover + '.svg height=' + iconSize + ' width=' + iconSize + '>';
                 html += '<div class=\'cityName\'>' + val[dataModel.ad] + '</div>';
                 if (val[dataModel.lighteningCount] > 0 && val[dataModel.radarPPI] > 0) html += '<div class=\'pheno\'><img src=./' + iconFolder + '/lightning.svg height=' + iconSize + ' width=' + iconSize + '></div>';
                 else if (val[dataModel.radarPPI] > 0) html += '<div class=\'pheno\'><img src=./' + iconFolder + '/prec.svg height=' + iconSize + ' width=' + iconSize + '></div>';
