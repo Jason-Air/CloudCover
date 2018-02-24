@@ -72,11 +72,10 @@
             function GetIcon(val, cover) {
                 var html = '<div class=\'cloudInfo\'> ' + val[dataModel.cloudBottomInterpole] + '<br/> ' + val[dataModel.cloudBottomEst] + '</div>'
                 //html += '<img src=./' + iconFolder + '/N' + cover + '.svg height=' + iconSize + ' width=' + iconSize + '>';
-                html += '<div class=\'icon n' + cover+'\'></div>'
-                html += '<div class=\'cityName\'>' + val[dataModel.ad] + '</div>';
+                html += '<div class=\'icon n' + cover + '\'></div>';
                 if (val[dataModel.lighteningCount] > 0 && val[dataModel.radarPPI] > 0) html += '<div class=\'icon lightning\'></div>'  //'<div class=\'pheno\'><img src=./' + iconFolder + '/lightning.svg height=' + iconSize + ' width=' + iconSize + '></div>';
                 else if (val[dataModel.radarPPI] > 0) html += '<div class=\'icon prec\'></div>'  //'<div class=\'pheno\'><img src=./' + iconFolder + '/prec.svg height=' + iconSize + ' width=' + iconSize + '></div>';
-
+                html += '<div class=\'cityName\'>' + val[dataModel.ad] + '</div>';
 
                 return L.divIcon({ html: html, iconSize: [iconSize, iconSize], className: 'divIcon' });
             }
