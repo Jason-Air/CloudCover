@@ -65,7 +65,7 @@
                     console.log(value[i][dataModel.istNo] + " " + value[i][dataModel.ad] + " " + value[i][dataModel.autoMan] + " " + coverAmount + " " + value[i][dataModel.cloudBottomEst]);
                     L.marker([value[i][dataModel.lat], value[i][dataModel.lon]], { icon: GetIcon(value[i], coverAmount) }).addTo(map).bindPopup(PrintPopup(value[i], coverAmount));
                 }
-                ShowInfo('precipitation', false);
+                ShowInfo('prec', false);
                 ShowInfo('cloudInfo', false);
             }
 
@@ -165,9 +165,9 @@
                 }
 
                 if (map.getZoom() < 8) {
-                    ShowInfo('precipitation', false);
+                    ShowInfo('prec', false);
                 } else {
-                    ShowInfo('precipitation', true);
+                    ShowInfo('prec', true);
                 }
             });
 
