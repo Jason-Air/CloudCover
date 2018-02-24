@@ -13,9 +13,14 @@
 
 }
 
+.clear{
+    clear:both;
+}
+
 #popup {
     font-family: Arial, sans-serif;
     font-size: 12px;
+    width:301px;
 }
 
     #popup .arabaslik, #popup #buluttabani {
@@ -36,21 +41,19 @@
     background-color: none;
 }
 
-    .divIcon .pheno {
+    .divIcon .pheno, .divIcon .prec, .divIcon .lightning {
         margin-top: -50px;
         margin-left: -25px;
     }
 
-
-
-    .divIcon div {
-        width: 60px;
-    }
-
-
         .divIcon .cloudInfo img {
             width: 12px;
             height: 12px;
+        }
+
+        .bilgi div{
+            width:50%;
+            float:left;
         }
 
 
@@ -170,3 +173,67 @@
         position: relative;
         top: 1px;
     }
+
+@font-face {
+    font-family: "font1";
+    src: url("../fonts/font1.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+}
+
+.icon {
+    font-family: "font1" !important;
+    font-style: normal !important;
+    font-weight: normal !important;
+    font-variant: normal !important;
+    text-transform: none !important;
+    font-size:24px;
+    speak: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.n0:before {
+    content: "\65";
+}
+
+.n1:before {
+    content: "\66";
+}
+
+.n2:before {
+    content: "\67";
+}
+
+.n3:before {
+    content: "\68";
+}
+
+.n4:before {
+    content: "\69";
+}
+
+.n5:before {
+    content: "\6a";
+}
+
+.n6:before {
+    content: "\6b";
+}
+
+.n7:before {
+    content: "\6c";
+}
+
+.n8:before {
+    content: "\6d";
+}
+
+.prec:before {
+    content: "\6e";
+}
+
+.lightning:before {
+    content: "\61";
+}

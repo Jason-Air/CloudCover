@@ -71,10 +71,11 @@
 
             function GetIcon(val, cover) {
                 var html = '<div class=\'cloudInfo\'> ' + val[dataModel.cloudBottomInterpole] + '<br/> ' + val[dataModel.cloudBottomEst] + '</div>'
-                html += '<img src=./' + iconFolder + '/N' + cover + '.svg height=' + iconSize + ' width=' + iconSize + '>';
+                //html += '<img src=./' + iconFolder + '/N' + cover + '.svg height=' + iconSize + ' width=' + iconSize + '>';
+                html += '<div class=\'icon n' + cover+'\'></div>'
                 html += '<div class=\'cityName\'>' + val[dataModel.ad] + '</div>';
-                if (val[dataModel.lighteningCount] > 0 && val[dataModel.radarPPI] > 0) html += '<div class=\'pheno\'><img src=./' + iconFolder + '/lightning.svg height=' + iconSize + ' width=' + iconSize + '></div>';
-                else if (val[dataModel.radarPPI] > 0) html += '<div class=\'pheno\'><img src=./' + iconFolder + '/prec.svg height=' + iconSize + ' width=' + iconSize + '></div>';
+                if (val[dataModel.lighteningCount] > 0 && val[dataModel.radarPPI] > 0) html += '<div class=\'icon lightning\'></div>'  //'<div class=\'pheno\'><img src=./' + iconFolder + '/lightning.svg height=' + iconSize + ' width=' + iconSize + '></div>';
+                else if (val[dataModel.radarPPI] > 0) html += '<div class=\'icon prec\'></div>'  //'<div class=\'pheno\'><img src=./' + iconFolder + '/prec.svg height=' + iconSize + ' width=' + iconSize + '></div>';
 
 
                 return L.divIcon({ html: html, iconSize: [iconSize, iconSize], className: 'divIcon' });
@@ -82,28 +83,39 @@
 
             function PrintPopup(val, coverAmout) {
                 return `<div id='popup'>
-                        <div id= 'istAd' > `+ val[dataModel.ad] + `</div >` + AutoMan(val) +
-                    `<div id='istBilgi'>
-                                <div class='arabaslik'>İstasyon Bilgileri</div>
-                                <div>Enlem: `+ val[dataModel.lat] + ` | Boylam: ` + val[dataModel.lon] + ` | Yükseklik: ` + val[dataModel.alt] + ` | Çalışma Şekli: ` + val[dataModel.autoMan] + `</div>
-                            </div>
-                            <div class='arabaslik'>Ölçülen Değerler</div>
-                            <div id='olcumler'>
-                                Sıcaklık: `+ val[dataModel.temperature] + ` | İşba: ` + val[dataModel.dewPoint] + ` | Görüş Mesafesi: ` + val[dataModel.visibility] + ` | Rüzgar:  ` + val[dataModel.windDirection] + ` / ` + val[dataModel.windSpeed] + ` | Toplam Kapalılık: ` + coverAmout + ` / 8 | Bulut Taban: ` + val[dataModel.cloudBottomObs] + ` 
-                            </div>
-                            <div id='hesaplanan'>
+                            <div id= 'istAd' > `+ val[dataModel.ad] + `</div >` + AutoMan(val) +
+                                `<div id='istBilgi'>
+                                    <div class='arabaslik'>İstasyon Bilgileri</div>
+                                    <div class='bilgi'>
+                                        <div>Enlem: `+ val[dataModel.lat] + ` </div><div>Boylam: ` + val[dataModel.lon] + ` </div><div> Yükseklik: ` + val[dataModel.alt] + ` </div><div>Çalışma Şekli: ` + val[dataModel.autoMan] + `</div>
+                                    </div>
+                                </div>
+                                <div class='arabaslik'>Ölçülen Değerler</div>
+                                <div id='olcumler' class='bilgi'>
+                                    <div>Sıcaklık: `+ val[dataModel.temperature] + `</div><div>İşba: ` + val[dataModel.dewPoint] + `</div><div>Görüş Mesafesi: ` + val[dataModel.visibility] + `</div><div>Rüzgar:  ` + val[dataModel.windDirection] + ` / ` + val[dataModel.windSpeed] + `</div><div>Toplam Kapalılık: ` + coverAmout + ` / 8</div><div>Bulut Taban: ` + val[dataModel.cloudBottomObs] + `</div> 
+                                </div>
+                                <div class='clear'></div>
                                 <div class='arabaslik'>Hesaplanan Değerler</div>
-                                <div>Bulut Kapalılığı (%): `+ val[dataModel.cloudCoverSat] + `</div>
-                                <div>Hesaplanan: `+ val[dataModel.cloudBottomEst] + `m | Enterpole Edilen: ` + val[dataModel.cloudBottomInterpole] + `m </div>
+                                <div id='hesaplanan' class='bilgi'>
+                                    <div>Bulut Kapalılığı (%): `+ val[dataModel.cloudCoverSat] + `</div>
+                                    <div>Hesaplanan: `+ val[dataModel.cloudBottomEst] + `m</div><div>Enterpole Edilen: ` + val[dataModel.cloudBottomInterpole] + `m </div>
+                                    
+                                </div>
+                                <div class='clear'></div>
                                 <hr />
-                                <div>Alçak Bulut Miktarı: `+ val[dataModel.cloudLowSat] + ` | Orta Bulut Miktarı: ` + val[dataModel.cloudMidSat] + ` | Yüksek Bulut Miktarı: ` + val[dataModel.cloudHiSat] + `</div>
-                                <div>En Yakın Radar PPI Değeri: `+ val[dataModel.radarPPI] + `</div>
-                                <div>İstasyon Etrafındaki Şimşek Sayısı: `+ val[dataModel.lighteningCount] + `</div>
-                                <div>Muhtemel Hadise: `+ Phenomenon(val) + `</div>
-                                <div>CB `+ CB(val) + `</div>
-                                <hr/>
-                                <div id='tarih'> Gözlem Tarih ve Saati:<br/>`+ val[dataModel.hour] + ` ` + val[dataModel.day] + `.` + val[dataModel.month] + `.` + val[dataModel.year] + `</div>
-                            </div>
+                                <div class='bilgi'> 
+                                    <div>Alçak Bulut Miktarı: `+ val[dataModel.cloudLowSat] + `</div><div>Orta Bulut Miktarı: ` + val[dataModel.cloudMidSat] + `</div><div>Yüksek Bulut Miktarı: ` + val[dataModel.cloudHiSat] + `</div>
+                                    <div>En Yakın Radar PPI Değeri: `+ val[dataModel.radarPPI] + `</div>
+                                    <div>İstasyon Etrafındaki Şimşek Sayısı: `+ val[dataModel.lighteningCount] + `</div>
+                                    <div>Muhtemel Hadise: `+ Phenomenon(val) + `</div>
+                                    <div>CB `+ CB(val) + `</div>
+                                </div>
+                                <div class='clear'></div>
+                                <hr/>    
+                                <div class='bilgi'>
+                                    <div id='tarih'> Gözlem Tarih ve Saati:<br/>`+ val[dataModel.hour] + ` ` + val[dataModel.day] + `.` + val[dataModel.month] + `.` + val[dataModel.year] + `</div>
+                                </div>
+                                <div class='clear'></div>
                         </div >
                       `
             }
