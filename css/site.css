@@ -41,6 +41,26 @@
     background-color: none;
 }
 
+    .divIcon .mavi {
+        color: #007bff;
+    }
+    .divIcon .gri {
+        color: #6c757d;
+    }
+    .divIcon .yesil {
+        color: #28a745;
+    }
+    .divIcon .kirmizi {
+        color: #dc3545;
+    }
+    .divIcon .sari {
+        color: #ffc107;
+    }
+    .divIcon .siyah {
+        color: #343a40;
+    }
+
+
     .divIcon .pheno, .divIcon .prec, .divIcon .lightning {
         margin-top: -1em;
         margin-left: -1em;
