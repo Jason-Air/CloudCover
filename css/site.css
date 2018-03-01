@@ -10,17 +10,16 @@
     height: 600px;
     border: solid 1px #999999;
     z-index: 5;
-
 }
 
-.clear{
-    clear:both;
+.clear {
+    clear: both;
 }
 
 #popup {
     font-family: Arial, sans-serif;
     font-size: 12px;
-    width:301px;
+    width: 301px;
 }
 
     #popup .arabaslik, #popup #buluttabani {
@@ -44,18 +43,23 @@
     .divIcon .mavi {
         color: #007bff;
     }
+
     .divIcon .gri {
         color: #6c757d;
     }
+
     .divIcon .yesil {
         color: #28a745;
     }
+
     .divIcon .kirmizi {
         color: #dc3545;
     }
+
     .divIcon .sari {
         color: #ffc107;
     }
+
     .divIcon .siyah {
         color: #343a40;
     }
@@ -66,21 +70,21 @@
         margin-left: -1em;
     }
 
-        .divIcon .cloudInfo img {
-            width: 12px;
-            height: 12px;
-        }
+    .divIcon .cloudInfo img {
+        width: 12px;
+        height: 12px;
+    }
 
-        .bilgi div{
-            width:50%;
-            float:left;
-        }
+.bilgi div {
+    width: 50%;
+    float: left;
+}
 
 
 #date {
     z-index: 1000;
     position: absolute;
-    top:0;
+    top: 0;
     height: 50px;
     width: fit-content;
     background-color: rgba(255,255,255,.5);
@@ -207,7 +211,7 @@
     font-weight: normal !important;
     font-variant: normal !important;
     text-transform: none !important;
-    font-size:24px;
+    font-size: 24px;
     speak: none;
     line-height: 1;
     -webkit-font-smoothing: antialiased;
@@ -257,3 +261,77 @@
 .lightning:before {
     content: "\61";
 }
+
+#skala {
+    font-family: Arial;
+    font-size: 12px;
+    line-height: 18px;
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100px;
+    z-index: 10;
+    background-color: rgba(248,249,250,.7);
+}
+    #skala #ok #kapat {
+        width: 20px;
+        height: 50px;
+        line-height: 46px;
+        transform: rotate(90deg);
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: -35px;
+        background-color: inherit;
+        font-size: 24px;
+    }
+    #skala #bilgi {
+        margin: 10px;
+        background-color: rgba(255,193,7,.7);
+    }
+
+    #skala #renkIcerik {
+        width: 100%;
+        margin-left: 10px;
+        margin-top: 10px;
+    }
+
+        #skala #renkIcerik .renk {
+            float: left;
+        }
+
+            #skala #renkIcerik .aciklama, #skala #renkIcerik .renk .deger {
+                width: 100px;
+                float: left;
+                margin-left: 5px;
+            }
+
+            #skala #renkIcerik .renk .renkLejant {
+                width: 70px;
+                height: 35px;
+                float: left;
+            }
+
+            #skala #renkIcerik .renk .kirmizi {
+                background-color: #dc3545;
+            }
+
+            #skala #renkIcerik .renk .sari {
+                background-color: #ffc107;
+            }
+
+            #skala #renkIcerik .renk .gri {
+                background-color: #6c757d;
+            }
+
+            #skala #renkIcerik .renk .yesil {
+                background-color: #28a745;
+            }
+
+            #skala #renkIcerik .renk .mavi {
+                background-color: #007bff;
+            }
+
+            #skala #renkIcerik .renk .siyah {
+                background-color: #343a40;
+            }

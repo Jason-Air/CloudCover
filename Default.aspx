@@ -48,7 +48,45 @@
                 </asp:DropDownList>
             </span>
             <asp:Button ID="button" runat="server" Text="Tamam" OnClick="button_Click" />
-           
+
+        </div>
+
+        <div id="skala">
+            <div id="ok">
+                <div id="kapat">«</div>
+            </div>
+            <div id="renkIcerik">
+                <div class="aciklama">
+                    Görüş:<br />
+                    Bulut Tabanı:
+                </div>
+                <div class="renk">
+                    <div class="renkLejant kirmizi"></div>
+                    <div class="deger">&lt;800m<br />&lt;200ft</div>
+                </div>
+                <div class="renk">
+                    <div class="renkLejant sari"></div>
+                    <div class="deger">&lt;1600m<br />&lt;300ft</div>
+                </div>
+                <div class="renk">
+                    <div class="renkLejant gri"></div>
+                    <div class="deger">&lt;3700m<br />&lt;700ft</div>
+                </div>
+                <div class="renk">
+                    <div class="renkLejant yesil"></div>
+                    <div class="deger">&lt;8000m<br />&lt;2500ft</div>
+                </div>
+                <div class="renk">
+                    <div class="renkLejant mavi"></div>
+                    <div class="deger">&gt;8000m<br />&gt;2500ft</div>
+                </div>
+                <div class="renk">
+                    <div class="renkLejant siyah"></div>
+                    <div class="deger">Bulut ve Görüş Bilgisi Yok</div>
+                </div>
+            </div>
+            <div class="clear"></div>
+            <div id="bilgi">Bu çalışma deneme aşamasındadır. Haritada Gösterilen noktalarda, hesaplanan değerlerden daha farklı hava durumu gözlenebilir. Bu üründen faydalanılması, kullanıcının inisiyatifindedir. MGM hiçbir şekilde sorumlu tutulamaz.</div>
         </div>
 
         <script type="text/javascript">
@@ -71,7 +109,7 @@
             }
 
             function GetIcon(val, cover) {
-                var cloudBottom = null, visibility = null, colorClass="";
+                var cloudBottom = null, visibility = null, colorClass = "";
                 if (!isNaN(val[dataModel.cloudBottom])) cloudBottom = val[dataModel.cloudBottom];
                 else if (!isNaN(val[dataModel.cloudBottomEst])) cloudBottom = val[dataModel.cloudBottomEst];
                 else if (!isNaN(val[dataModel.cloudBottomInterpole])) cloudBottom = val[dataModel.cloudBottomInterpole];
@@ -81,10 +119,10 @@
                 else if (cloudBottom < 700 || val[dataModel.visibility] < 3700) colorClass = "gri";
                 else if (cloudBottom < 2500 || val[dataModel.visibility] < 8000) colorClass = "yesil";
                 else if (cloudBottom > 2500 || val[dataModel.visibility] > 8000) colorClass = "mavi";
-                else colorClass="siyah"
+                else colorClass = "siyah"
 
                 var html = '<div class=\'cloudInfo\'> ' + val[dataModel.cloudBottomInterpole] + '<br/> ' + val[dataModel.cloudBottomEst] + '</div>'
-                html += '<div class=\'icon '+colorClass+' n' + cover + '\'></div>';
+                html += '<div class=\'icon ' + colorClass + ' n' + cover + '\'></div>';
                 if (val[dataModel.lighteningCount] > 0 && val[dataModel.radarPPI] > 0) html += '<div class=\'icon lightning\'></div>'  //'<div class=\'pheno\'><img src=./' + iconFolder + '/lightning.svg height=' + iconSize + ' width=' + iconSize + '></div>';
                 else if (val[dataModel.radarPPI] > 0) html += '<div class=\'icon prec\'></div>'  //'<div class=\'pheno\'><img src=./' + iconFolder + '/prec.svg height=' + iconSize + ' width=' + iconSize + '></div>';
                 html += '<div class=\'cityName\'>' + val[dataModel.ad] + '</div>';
