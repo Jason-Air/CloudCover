@@ -53,7 +53,7 @@
 
         <div id="skala">
             <div id="ok">
-                <div id="kapat">«</div>
+                <div id="kapat"><div>«</div></div>
             </div>
             <div id="renkIcerik">
                 <div class="aciklama">
@@ -187,6 +187,10 @@
                 else return "yok";
             }
 
+            function skalaAcKapat() {
+                document.querySelector('#skala').classList.toggle('kapali');
+            }
+            document.querySelector('#ok').addEventListener('click', skalaAcKapat);
         </script>
         <asp:Label ID="Label1" runat="server" Text=""></asp:Label>
     </form>
