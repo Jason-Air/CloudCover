@@ -53,7 +53,9 @@
 
         <div id="skala">
             <div id="ok">
-                <div id="kapat"><div>«</div></div>
+                <div id="kapat">
+                    <div>«</div>
+                </div>
             </div>
             <div id="renkIcerik">
                 <div class="aciklama">
@@ -62,23 +64,38 @@
                 </div>
                 <div class="renk">
                     <div class="renkLejant kirmizi"></div>
-                    <div class="deger">&lt;800m<br />&lt;200ft</div>
+                    <div class="deger">
+                        &lt;800m<br />
+                        &lt;200ft
+                    </div>
                 </div>
                 <div class="renk">
                     <div class="renkLejant sari"></div>
-                    <div class="deger">&lt;1600m<br />&lt;300ft</div>
+                    <div class="deger">
+                        &lt;1600m<br />
+                        &lt;300ft
+                    </div>
                 </div>
                 <div class="renk">
                     <div class="renkLejant gri"></div>
-                    <div class="deger">&lt;3700m<br />&lt;700ft</div>
+                    <div class="deger">
+                        &lt;3700m<br />
+                        &lt;700ft
+                    </div>
                 </div>
                 <div class="renk">
                     <div class="renkLejant yesil"></div>
-                    <div class="deger">&lt;8000m<br />&lt;2500ft</div>
+                    <div class="deger">
+                        &lt;8000m<br />
+                        &lt;2500ft
+                    </div>
                 </div>
                 <div class="renk">
                     <div class="renkLejant mavi"></div>
-                    <div class="deger">&gt;8000m<br />&gt;2500ft</div>
+                    <div class="deger">
+                        &gt;8000m<br />
+                        &gt;2500ft
+                    </div>
                 </div>
                 <div class="renk">
                     <div class="renkLejant siyah"></div>
@@ -110,11 +127,11 @@
 
             function GetIcon(val, cover) {
                 var cloudBottom = null, visibility = null, colorClass = "";
-                if (!isNaN(val[dataModel.cloudBottom])) cloudBottom = val[dataModel.cloudBottom];
-                else if (!isNaN(val[dataModel.cloudBottomEst])) cloudBottom = val[dataModel.cloudBottomEst];
-                else if (!isNaN(val[dataModel.cloudBottomInterpole])) cloudBottom = val[dataModel.cloudBottomInterpole];
-
-                if (cloudBottom < 200 || val[dataModel.visibility] < 800) colorClass = "kirmizi";
+                if (!isNaN(val[dataModel.cloudBottomObs])) cloudBottom = val[dataModel.cloudBottomObs] * 3.3;
+                else if (!isNaN(val[dataModel.cloudBottomEst])) cloudBottom = val[dataModel.cloudBottomEst] * 3.3;
+                else if (!isNaN(val[dataModel.cloudBottomInterpole])) cloudBottom = val[dataModel.cloudBottomInterpole] * 3.3;
+                if (cloudBottom == null && val[dataModel.visibility] == '---') colorClass = "siyah";
+                else if (cloudBottom < 200 || val[dataModel.visibility] < 800) colorClass = "kirmizi";
                 else if (cloudBottom < 300 || val[dataModel.visibility] < 1600) colorClass = "sari";
                 else if (cloudBottom < 700 || val[dataModel.visibility] < 3700) colorClass = "gri";
                 else if (cloudBottom < 2500 || val[dataModel.visibility] < 8000) colorClass = "yesil";
@@ -136,12 +153,12 @@
                     `<div id='istBilgi'>
                                     <div class='arabaslik'>İstasyon Bilgileri</div>
                                     <div class='bilgi'>
-                                        <div>Enlem: `+ val[dataModel.lat] + ` </div><div>Boylam: ` + val[dataModel.lon] + ` </div><div> Yükseklik: ` + val[dataModel.alt] + ` </div><div>Çalışma Şekli: ` + val[dataModel.autoMan] + `</div>
+                                        <div>Enlem: `+ val[dataModel.lat] + `˚ </div><div>Boylam: ` + val[dataModel.lon] + `˚ </div><div> Yükseklik: ` + val[dataModel.alt] + `m </div><div>Çalışma Şekli: ` + val[dataModel.autoMan] + `</div>
                                     </div>
                                 </div>
                                 <div class='arabaslik'>Ölçülen Değerler</div>
                                 <div id='olcumler' class='bilgi'>
-                                    <div>Sıcaklık: `+ val[dataModel.temperature] + `</div><div>İşba: ` + val[dataModel.dewPoint] + `</div><div>Görüş Mesafesi: ` + val[dataModel.visibility] + `</div><div>Rüzgar:  ` + val[dataModel.windDirection] + ` / ` + val[dataModel.windSpeed] + `</div><div>Toplam Kapalılık: ` + coverAmout + ` / 8</div><div>Bulut Taban: ` + val[dataModel.cloudBottomObs] + `</div> 
+                                    <div>Sıcaklık: `+ val[dataModel.temperature] + `˚C</div><div>İşba Sıcaklığı: ` + val[dataModel.dewPoint] + `˚C</div><div>Görüş Mesafesi: ` + val[dataModel.visibility] + `m</div><div>Rüzgar:  ` + val[dataModel.windDirection] + `˚ / ` + val[dataModel.windSpeed] + `kt</div><div>Toplam Kapalılık: ` + coverAmout + ` / 8</div><div>Bulut Taban: ` + val[dataModel.cloudBottomObs] + `m</div> 
                                 </div>
                                 <div class='clear'></div>
                                 <div class='arabaslik'>Hesaplanan Değerler</div>
